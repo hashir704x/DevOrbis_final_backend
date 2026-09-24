@@ -1,0 +1,90 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789122185766,
+      "tag": "0000_create-users-table",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789233859197,
+      "tag": "0001_create_otpCodes_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789549396723,
+      "tag": "0002_add_user_roles",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789635211902,
+      "tag": "0003_add_documents_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789668567045,
+      "tag": "0004_add_document_chunks_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1789671605013,
+      "tag": "0005_add_status_field_to_document_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1789710862524,
+      "tag": "0006_reduced_vector_dimensions",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1789726151292,
+      "tag": "0007_add_chats_and_messages_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1789982760752,
+      "tag": "0008_add_leads_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1789995551083,
+      "tag": "0009_create_tasks_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1789995798729,
+      "tag": "0010_add_lead_id_to_tasks_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1790170502427,
+      "tag": "0011_add_ai_usage_table",
+      "breakpoints": true
+    }
+  ]
+}
