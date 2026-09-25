@@ -101,7 +101,7 @@ export async function verifyEmail(req: Request, res: Response) {
   res.cookie("agentic_rag_access_token", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "lax",
+    sameSite: "none",
     maxAge: 2 * 24 * 60 * 60 * 1000,
   });
   return res
@@ -137,7 +137,7 @@ export async function login(req: Request, res: Response) {
   res.cookie("agentic_rag_access_token", token, {
     httpOnly: true,
     secure: true,
-    sameSite: "lax",
+    sameSite: "none",
     maxAge: 2 * 24 * 60 * 60 * 1000,
   });
   const userData = {
@@ -172,7 +172,7 @@ export async function resendOtp(req: Request, res: Response) {
 export async function logout(req: Request, res: Response) {
   res.clearCookie("agentic_rag_access_token", {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "none",
     secure: true,
   });
   return res
