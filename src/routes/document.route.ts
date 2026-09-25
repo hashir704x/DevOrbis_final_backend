@@ -7,19 +7,19 @@ import { authMiddleware, authorizeRole } from "../middleware/auth.middleware.js"
 const router = Router();
 
 router.post(
-    "/upload",
-    authMiddleware,
-    authorizeRole("admin"),
-    upload.single("document"),
-    validateDocumentUpload,
-    asyncHandler(uploadDocument),
+  "/upload",
+  authMiddleware,
+  authorizeRole("admin"),
+  upload.single("document"),
+  validateDocumentUpload,
+  asyncHandler(uploadDocument),
 );
 
 router.get(
-    "/get-documents",
-    authMiddleware,
-    authorizeRole("admin"),
-    asyncHandler(getDocuments),
+  "/get-documents",
+  authMiddleware,
+  authorizeRole("admin"),
+  asyncHandler(getDocuments),
 );
 
 export default router;

@@ -14,7 +14,6 @@ export async function generateEmbeddings(chunks: Document[]) {
   }[] = [];
   for (const batch of batches) {
     const texts = batch.map((chunk) => chunk.pageContent);
-    console.log("Calling embedding model");
     const embeddings = await geminiEmbeddings.embedDocuments(texts);
     for (let i = 0; i < batch.length; i++) {
       const chunk = batch[i];

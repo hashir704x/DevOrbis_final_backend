@@ -1,10 +1,11 @@
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
-import type { RawRetrievedChunk, RetrievedChunk } from "../../../types/types.js";
+import type { RawRetrievedChunk } from "../../../types/types.js";
 import type { GraphState } from "../graph.js";
 import { retrieveChunks } from "../../../utils/documents/retrieve-chunks.js";
 import { ragPrompt } from "../prompts.js";
 import { LLM } from "../../../utils/gemini-llm-model.js";
 import { saveAiUsage } from "../../../utils/saveAiUsage.js";
+import { rerankChunks } from "../reranker.js";
 
 function buildKnowledgeBaseContext(chunks: RawRetrievedChunk[]) {
   return chunks
@@ -42,8 +43,9 @@ export async function ragNode(
     throw new Error("User message content must be a string.");
   }
   const query = lastMessage.content;
-  const rawChunks = await retrieveChunks(query, 5);
-  const knowledgeBaseContext = buildKnowledgeBaseContext(rawChunks);
+  const rawChunks = await retrieveChunks(query, 6);
+  const rerankedChunks = await rerankChunks(query, rawChunks);
+  const knowledgeBaseContext = buildKnowledgeBaseContext(rerankedChunks);
   const messages = [
     {
       role: "system",

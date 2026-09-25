@@ -2,6 +2,9 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+
 import testRoutes from "./routes/test.route.js";
 import authRoutes from "./routes/auth.route.js";
 import chatRoutes from "./routes/chat.route.js";
@@ -12,14 +15,18 @@ import leadRoutes from "./routes/lead.route.js";
 import aiUsageRoutes from "./routes/ai-usage.route.js";
 
 import { errorMiddleware } from "./middleware/error.middleware.js";
-import { createServer } from "http";
-import { Server } from "socket.io";
 import { initializeSocket } from "./chat/socket/socket.js";
 
+
 const PORT = process.env.PORT;
+const FRONTEND_URL=process.env.FRONTEND_URL;
 
 if (!PORT) {
   throw new Error("PORT is not set in the .env file ");
+}
+
+if (!FRONTEND_URL) {
+  throw new Error("FRONTEND_URL is not set in the .env file ");
 }
 
 const app = express();
@@ -27,7 +34,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: FRONTEND_URL,
     credentials: true,
   },
 });
@@ -35,7 +42,7 @@ initializeSocket(io);
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: FRONTEND_URL,
     credentials: true,
   }),
 );

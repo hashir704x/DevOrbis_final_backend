@@ -6,10 +6,10 @@ import { authMiddleware, authorizeRole } from "../middleware/auth.middleware.js"
 const router = Router();
 
 router.get(
-    "/get-all-leads",
-    authMiddleware,
-    authorizeRole("admin", "staff"),
-    asyncHandler(getAllLeads),
+  "/get-all-leads",
+  authMiddleware,
+  authorizeRole("admin", "staff"),
+  asyncHandler(getAllLeads),
 );
 
 export default router;

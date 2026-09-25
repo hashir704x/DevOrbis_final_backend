@@ -4,21 +4,16 @@ import { generateEmbeddings } from "./embeddings.js";
 import { storeChunks } from "./store-chunks.js";
 
 export async function processDocument({
-    buffer,
-    documentId,
-    mimeType,
+  buffer,
+  documentId,
+  mimeType,
 }: {
-    documentId: string;
-    buffer: Buffer;
-    mimeType: string;
+  documentId: string;
+  buffer: Buffer;
+  mimeType: string;
 }) {
-    console.log("1");
-    const documents = await extractText({ buffer, mimeType });
-    console.log("2");
-    const chunks = await splitDocuments(documents);
-    console.log("3");
-    const embeddings = await generateEmbeddings(chunks);
-    console.log("4");
-    await storeChunks(documentId, embeddings);
-    console.log("5");
+  const documents = await extractText({ buffer, mimeType });
+  const chunks = await splitDocuments(documents);
+  const embeddings = await generateEmbeddings(chunks);
+  await storeChunks(documentId, embeddings);
 }

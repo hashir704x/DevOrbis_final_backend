@@ -4,29 +4,25 @@ import { socketErrorHandler } from "./socket-error-handler.js";
 import { socketAuthMiddleware } from "./socket-auth-middleware.js";
 
 export function initializeSocket(io: Server) {
-    io.use(socketAuthMiddleware);
-    io.on("connection", (socket) => {
-        console.log("Socket connected:", socket.id);
-        socket.on("chat:message", async (payload) => {
-            try {
-                const userData = socket.data.userData;
-                const { chatId, message } = payload;
-                await processChatMessage(
-                    message,
-                    userData.userId,
-                    chatId,
-                    (chunk) => {
-                        // console.log("emitting chunk", chunk)
-                        socket.emit("chat:chunk", chunk);
-                    },
-                );
-                socket.emit("chat:complete");
-            } catch (error) {
-                socketErrorHandler(socket, error);
-            }
+  io.use(socketAuthMiddleware);
+  io.on("connection", (socket) => {
+    console.log("Socket connected:", socket.id);
+    socket.on("chat:message", async (payload) => {
+      try {
+        const userData = socket.data.userData;
+        const { chatId, message } = payload;
+        await processChatMessage(message, userData.userId, chatId, (chunk) => {
+          socket.emit("chat:chunk", chunk);
         });
-        socket.on("disconnect", () => {
-            console.log("Socket disconnected:", socket.id);
-        });
+        socket.emit("chat:complete");
+      } catch (error) {
+        console.log("Error in socket");
+        if (error instanceof Error) console.log(error.message);
+        socketErrorHandler(socket, error);
+      }
     });
+    socket.on("disconnect", () => {
+      console.log("Socket disconnected:", socket.id);
+    });
+  });
 }

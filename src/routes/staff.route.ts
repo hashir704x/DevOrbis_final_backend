@@ -6,9 +6,9 @@ import { authMiddleware, authorizeRole } from "../middleware/auth.middleware.js"
 const router = Router();
 
 router.get(
-    "/get-all-staff",
-    authMiddleware,
-    authorizeRole("admin"),
-    asyncHandler(getAllStaff),
+  "/get-all-staff",
+  authMiddleware,
+  authorizeRole("admin"),
+  asyncHandler(getAllStaff),
 );
 export default router;

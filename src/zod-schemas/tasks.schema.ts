@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const createTaskSchema = z.object({
   leadId: z.uuid(),
-  title: z.string().nonempty(),
-  description: z.string().nonempty(),
+  title: z.string().nonempty("Title is required"),
+  description: z.string().nonempty("Description is required"),
   priority: z.enum(["low", "medium", "high"]).default("medium"),
   assignedTo: z.uuid().optional(),
 });

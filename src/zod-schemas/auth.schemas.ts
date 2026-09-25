@@ -13,7 +13,7 @@ export const verifyEmailSchema = z.object({
 
 export const loginSchema = z.object({
     email: z.email("Invalid email address"),
-    password: z.string().min(8, "Password is required"),
+    password: z.string().min(8, "Password is required")
 });
 
 export const resendOtpSchema = z.object({

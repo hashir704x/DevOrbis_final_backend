@@ -136,7 +136,6 @@ export async function createTask(req: Request, res: Response) {
         404,
       );
     }
-
     assignedTo = validatedData.assignedTo;
   }
 
@@ -184,25 +183,26 @@ export async function createTask(req: Request, res: Response) {
     throw new AppError("Task created but failed to fetch task details", 500);
   }
 
-  await fetch("https://hashir704xdev.app.n8n.cloud/webhook-test/create-task", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      id: createdTask.id,
-      title: createdTask.title,
-      description: createdTask.description,
-      status: createdTask.status,
-      priority: createdTask.priority,
-      assignedTo: createdTask.assignedTo,
-      assignedStaffName: taskDetails.assignedStaffName,
-      leadId: createdTask.leadId,
-      leadName: taskDetails.leadName,
-      leadEmail: taskDetails.leadEmail,
-      createdAt: createdTask.createdAt,
-    }),
-  });
+  // the n8n webhook trigger
+  // await fetch("https://hashir704xdev.app.n8n.cloud/webhook-test/create-task", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({
+  //     id: createdTask.id,
+  //     title: createdTask.title,
+  //     description: createdTask.description,
+  //     status: createdTask.status,
+  //     priority: createdTask.priority,
+  //     assignedTo: createdTask.assignedTo,
+  //     assignedStaffName: taskDetails.assignedStaffName,
+  //     leadId: createdTask.leadId,
+  //     leadName: taskDetails.leadName,
+  //     leadEmail: taskDetails.leadEmail,
+  //     createdAt: createdTask.createdAt,
+  //   }),
+  // });
 
   return res
     .status(201)
@@ -319,7 +319,6 @@ export async function createTaskWithAi(req: Request, res: Response) {
       content: prompt,
     },
   ]);
-  // console.log("result", result);
   return res
     .status(200)
     .json(
