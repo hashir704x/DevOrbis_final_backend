@@ -1,15 +1,15 @@
-import { getAiUsageStats } from "../controllers/ai-usage.controller.js";
 import { Router } from "express";
 import { authMiddleware, authorizeRole } from "../middleware/auth.middleware.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { getAdminDashboardStats } from "../controllers/admin.controller.js";
 
 const router = Router();
 
 router.get(
-    "/get-ai-usage",
+    "/get-dashboard-stats",
     authMiddleware,
     authorizeRole("admin"),
-    asyncHandler(getAiUsageStats),
+    asyncHandler(getAdminDashboardStats),
 );
 
 export default router;

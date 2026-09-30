@@ -38,6 +38,7 @@ export async function signup(req: Request, res: Response) {
 }
 
 export async function getCurrentUser(req: Request, res: Response) {
+  
   const userData = req.userData as JwtPayload;
   const userId = userData.userId;
 
@@ -50,7 +51,6 @@ export async function getCurrentUser(req: Request, res: Response) {
     })
     .from(users)
     .where(eq(users.id, userId));
-
   if (!user) {
     return res.status(404).json(new ApiResponse(false, "User not found", null));
   }
