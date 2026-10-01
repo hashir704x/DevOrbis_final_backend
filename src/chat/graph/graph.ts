@@ -1,6 +1,5 @@
 import { Annotation, StateGraph, START, END } from "@langchain/langgraph";
 import { BaseMessage } from "@langchain/core/messages";
-import { LLM } from "../../utils/gemini-llm-model.js";
 import type { Route } from "../../types/types.js";
 import { leadNode } from "./nodes/lead-node.js";
 import { tasksNode } from "./nodes/tasks-node.js";
@@ -16,19 +15,6 @@ export const GraphState = Annotation.Root({
     userId: Annotation<string>(),
     route: Annotation<Route>(),
 });
-
-async function callLLM(
-    state: typeof GraphState.State,
-    config: { writer: (data: unknown) => void },
-) {
-    const stream = await LLM.stream(state.messages);
-    for await (const chunk of stream) {
-        config.writer(chunk.content);
-    }
-    return {
-        messages: [],
-    };
-}
 
 function routeFromOrchestrator(state: typeof GraphState.State) {
     console.log("ROUTE NODE REACHED");

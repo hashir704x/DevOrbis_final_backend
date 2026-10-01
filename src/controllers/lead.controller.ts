@@ -15,6 +15,7 @@ export async function getAllLeads(req: Request, res: Response) {
         })
         .from(leads)
         .innerJoin(users, eq(leads.userId, users.id));
+    
     return res
         .status(200)
         .json(new ApiResponse(true, "Leads fetched successfully", allLeads));

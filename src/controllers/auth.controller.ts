@@ -38,7 +38,6 @@ export async function signup(req: Request, res: Response) {
 }
 
 export async function getCurrentUser(req: Request, res: Response) {
-  
   const userData = req.userData as JwtPayload;
   const userId = userData.userId;
 

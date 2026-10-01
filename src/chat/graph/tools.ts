@@ -3,6 +3,7 @@ import { z } from "zod";
 import { eq, and } from "drizzle-orm";
 import { db } from "../../drizzle/database-client.js";
 import { leads, tasks } from "../../drizzle/schema.js";
+import { invalidateAdminDashboardStats } from "../../utils/redis.js";
 
 export function createLeadTools(userId: string) {
   const createLead = tool(
@@ -31,6 +32,7 @@ export function createLeadTools(userId: string) {
         console.log("Error");
         throw new Error("Failed to create lead.");
       }
+      await invalidateAdminDashboardStats();
       return {
         success: true,
         leadId: lead.id,

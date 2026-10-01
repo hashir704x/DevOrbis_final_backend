@@ -19,6 +19,7 @@ import {
     delete_task_n8n_url,
     update_task_n8n_url,
 } from "../utils/n8n-urls.js";
+import { invalidateAdminDashboardStats } from "../utils/redis.js";
 
 const leadUser = alias(users, "lead_user");
 const assignedStaff = alias(users, "assigned_staff");
@@ -163,6 +164,9 @@ export async function createTask(req: Request, res: Response) {
     if (!createdTask) {
         throw new AppError("Failed to create task, problem at server side", 500);
     }
+
+    await invalidateAdminDashboardStats();
+
     const leadUser = alias(users, "lead_user");
     const assignedStaff = alias(users, "assigned_staff");
 
@@ -294,6 +298,7 @@ export async function editTask(req: Request, res: Response) {
     if (!updatedTask) {
         throw new AppError("Failed to edit the task, problem at server side", 500);
     }
+    await invalidateAdminDashboardStats();
 
     const leadUser = alias(users, "lead_user");
     const assignedStaff = alias(users, "assigned_staff");
@@ -408,7 +413,8 @@ export async function deleteTask(req: Request, res: Response) {
     }
     await db.delete(tasks).where(eq(tasks.id, taskId));
     const targetTaskId = task[0].id;
-    await db.delete(tasks).where(eq(tasks.id, taskId));
+    
+    await invalidateAdminDashboardStats();
 
     console.log("Sending n8n request");
     const n8nResponse = await fetch(delete_task_n8n_url as string, {
